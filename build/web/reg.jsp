@@ -21,9 +21,11 @@
            String Name=request.getParameter("Name");
            String Email=request.getParameter("Email");
            String Phone=request.getParameter("Phone");
+           String Password=request.getParameter("Password");
+                      
            action a=new action();
            try{
-               i="insert into calm(Name,Email,Phone) values('"+Name+"','"+Email+"','"+Phone+"')";
+               i="insert into calm(Name,Email,Phone,Password) values('"+Name+"','"+Email+"','"+Phone+"','"+Password+"')";
                b=a.insert(i);
            }
            catch(Exception e){
