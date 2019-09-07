@@ -12,7 +12,7 @@ public class ease {
     public Connection connect() throws ClassNotFoundException{
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/calm","root","");
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/collection","root","");
         }
         catch(SQLException e){
             System.out.print(e);
