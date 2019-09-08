@@ -9,7 +9,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Ease | Registration</title>
+        <title>Ease | Feed </title>
 
         
       
@@ -19,13 +19,7 @@
         <link rel="stylesheet" href="assets/css/style.css">
 
       
-<script>
-function mobile() {
-  var x = document.getElementById("mobile").value;
-  
-  document.getElementById("mob").innerHTML = x;
-}
-</script>
+
     </head>
 
     <body>
@@ -37,10 +31,10 @@ function mobile() {
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1><strong>Ease</strong> Registration Form</h1>
+                            <h1><strong>Ease</strong> Home</h1>
                             <div class="description">
                             	<p>
-	                            	<strong>Authentication</strong></a></p>
+	                            	<strong>Feed</strong></a></p>
                             </div>
                         </div>
                     </div>
@@ -48,7 +42,10 @@ function mobile() {
                         <div class="col-sm-6 col-sm-offset-3 form-box">
                         	
                         	<form role="form" action="register.jsp" method="post" class="registration-form">
-                        		
+                        		<% 
+                                            String q1="select * from calm ";
+                                        String qry="select * from feed where ";
+                                        %>
                         		<fieldset>
 		                        	<div class="form-top">
 		                        		<div class="form-top-left">
