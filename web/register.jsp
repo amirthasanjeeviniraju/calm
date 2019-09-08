@@ -20,9 +20,9 @@
            String name=request.getParameter("name");
            String mobile=request.getParameter("mobile");
            String password=request.getParameter("password");
-           String ques1=request.getParameter("ques1");
-           String ques2=request.getParameter("ques2");
-           String ques3=request.getParameter("ques3");
+           String ques1=request.getParameter("ques2");
+           String ques2=request.getParameter("ques3");
+           String ques3=request.getParameter("ques4");
            
            
                       
