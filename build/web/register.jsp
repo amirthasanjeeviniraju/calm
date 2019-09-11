@@ -4,6 +4,8 @@
     Author     : N.AMIRTHA SANJEEVINI
 --%>
 
+<%@page import="java.util.Random"%>
+<%@page import="java.sql.ResultSet"%>
 <%@page import="info.action"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -28,7 +30,7 @@
 
    
         <%
-            String i,q1,q2,q3,c1,c2,c3;
+            String i,q1,q2,q3,c1=null,c2=null,c3=null;
             int b;
            String name=request.getParameter("name");
            String mobile=request.getParameter("mobile");
@@ -47,7 +49,7 @@
               c1=a.fun(q1);
               c2=a.fun(q2);
               c3=a.fun(q3);
-               i="insert into calm(name,mobile,password,char1,char2,char3) values('"+name+"','"+mobile+"','"+password+"','"+c1+"','"+c2+"','"+c3+"')";
+               i="insert into calm(name,mobile,password,char1,char2,char3,feed) values('"+name+"','"+mobile+"','"+password+"','"+c1+"','"+c2+"','"+c3+"','')";
                b=a.insert(i);
            }
            catch(Exception e){
@@ -75,62 +77,57 @@
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 form-box">
                         	
-                        	<form role="form" action="register.jsp" method="post" class="registration-form">
+                        	<form role="form" action="back.jsp" method="post" class="registration-form">
                         		<% 
-                                          
-                                        String qry="select * from feed where search like %"+c1+"% ";
+                                            int j=1;
+                                        Random r = new Random();
+                                            int rand=r.nextInt(3);
+                                            String common=null;
+                                            switch(rand){
+                                                case 0: common=c1; break;
+                                                case 1: common=c2; break;
+                                                case 2: common=c3; break;
+                                                default: common=c1;
+                                            }
+                                            
+                                        String qry="select * from feed where search like '%"+common+"%' ";
+                                        ResultSet rt= a.act(qry);
+                                        rt.last();
+                                        int rows = rt.getRow();
+                                        rt.beforeFirst();
+                                        rows=rows+2;
+                                        
                                         %>
                         		<fieldset>
 		                        	<div class="form-top">
 		                        		<div class="form-top-left">
-		                        			<h3>Step 1 / 5</h3>
-		                            		<p>Tell us who you are:</p>
+		                        			<h3>Feed 1 / <%= rows %></h3>
+		                            		<p>Here is Your Stress Busters ...</p>
 		                        		</div>
 		                        		<div class="form-top-right">
 		                        			<i class="fa fa-user"></i>
 		                        		</div>
 		                            </div>
 		                            <div class="form-bottom">
-				                    	<div class="form-group">
-				                    		<label class="sr-only" for="form-first-name">Name</label>
-				                        	<input type="text" name="name" placeholder="Your Name" class="form-first-name form-control" id="name">
-				                        </div>
-				                        
-				                        <div class="form-group">
-				                        	<label class="sr-only" for="form-last-name">Mobile Number</label>
-				                        	<input type="text" id="mobile" name="mobile" placeholder="Mobile Number" class="form-last-name form-control" >
-				                        </div>
-				                        <div class="form-group">
-				                        	<label class="sr-only" for="form-last-name">Password</label>
-				                        	<input type="password" name="password" placeholder="Set Password" class="form-last-name form-control" id="password">
-				                        </div>
-										
+                                                <div class="form-group">
+                                                    <center><img src="assets/one.png" height="70%" width="70%"></center></div>			
 				                        <button type="button"  class="btn btn-next">Next</button>
 				                    </div>
                                             </fieldset>
                                     <% 
-                                            String qry;
-                                            ResultSet rs;
-                                            Random r = new Random();
-                                            int i=1;
-                                            int rand=r.nextInt(3);
-                                            qry="select * from questions where qid='"+rand+"'";
-                                            action n=new action();
-                                            rs=n.act(qry);
-                                             while(rs.next()){
-                                                 i++;
-                                                 String question=rs.getString("question");
-                                                 String option1=rs.getString("option1");
-                                                 String option2=rs.getString("option2");
-                                                 String option3=rs.getString("option3");
+                                             while(rt.next()){
+                                                 j++;
+                                                 String topic=rt.getString("topic");
+                                                 String link=rt.getString("link");
+                                                 
                                             
                                             %>
 			                    
 			                    <fieldset>
 		                        	<div class="form-top">
 		                        		<div class="form-top-left">
-		                        			<h3>Step <%= i %> / 5</h3>
-		                            		<p>Question</p>
+		                        			<h3>Step <%= j %> / <%= rows %></h3>
+		                            		<p><%= topic %></p>
 		                        		</div>
 		                        		<div class="form-top-right">
 		                        			<i class="fa fa-user"></i>
@@ -138,16 +135,7 @@
 		                            </div>
 		                            <div class="form-bottom">
 				                    	<div class="form-group">
-				                    		<P><%= question %></P>
-				                        </div>
-				                        <div class="form-group">
-				                        	<label class="sr-only" for="form-last-name">Options</label>
-				                        	<select name="ques<%=i %>" class="form-last-name form-control">
-                                                                        <option value="nothing"> Select any one </option>
-				                        		<option value="<%= option1 %>"><%= option1 %> </option>
-                                                                        <option value="<%= option2 %>"> <%= option2 %></option>
-                                                                        <option value="<%= option3 %>"><%= option3 %> </option>
-				                        	</select> 
+                                                            <%= link %>	
 				                        </div>
 				                         <button type="button" class="btn btn-previous">Previous</button>
 				                        <button type="button"  class="btn btn-next">Next</button>
@@ -158,7 +146,7 @@
 			                    <fieldset>
 		                        	<div class="form-top">
 		                        		<div class="form-top-left">
-		                        			<h3>Step 5 / 5</h3>
+		                        			<h3>Step <%= rows %> / <%= rows %></h3>
 		                            		<p>Thank you!</p>
 		                        		</div>
 		                        		<div class="form-top-right">
@@ -166,9 +154,19 @@
 		                        		</div>
 		                            </div>
 									<div class="form-bottom">
-                                                                            <h3> "Have a happy time with ease" </h3>
+                                                                           <div class="form-group">
+                                                                               <input type="hidden" name="name" value="<%= name  %>"/>
+				                        	<label class="sr-only" for="form-last-name">How do you Like it ?</label>
+				                        	<select name="feed" class="form-last-name form-control">
+                                                                        <option value="nothing"> Rate us </option>
+				                        		<option value="1">Poor </option>
+                                                                        <option value="3"> Average</option>
+                                                                        <option value="5">Great </option>
+				                        	</select> 
+				                        </div>
+				                        
 				                         <button type="button" class="btn btn-previous">Previous</button>
-				                        <button type="submit" class="btn">Register</button>
+				                        <button type="submit" class="btn">Submit</button>
 				                    </div>
 		                            
 			                    </fieldset>

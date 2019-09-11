@@ -1,6 +1,6 @@
 <%-- 
-    Document   : register
-    Created on : 7 Sep, 2019, 12:32:09 PM
+    Document   : log
+    Created on : 9 Sep, 2019, 1:55:18 PM
     Author     : N.AMIRTHA SANJEEVINI
 --%>
 
@@ -8,6 +8,7 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="info.action"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <!DOCTYPE html>
 <html>
      <head>
@@ -27,39 +28,38 @@
       
 
     </head>
-
-   
+    
         <%
-            String i,q1,q2,q3,c1=null,c2=null,c3=null;
-            int b;
-           String name=request.getParameter("name");
-           String mobile=request.getParameter("mobile");
-           String password=request.getParameter("password");
-           String ques1=request.getParameter("ques2");
-           String ques2=request.getParameter("ques3");
-           String ques3=request.getParameter("ques4");
-           
-           
-                      
-           action a=new action();
-           try{
-              q1="select * from answer where options='"+ques1+"'";
-              q2="select * from answer where options='"+ques2+"'";
-              q3="select * from answer where options='"+ques3+"'";
-              c1=a.fun(q1);
-              c2=a.fun(q2);
-              c3=a.fun(q3);
-               i="insert into calm(name,mobile,password,char1,char2,char3,feed) values('"+name+"','"+mobile+"','"+password+"','"+c1+"','"+c2+"','"+c3+"','')";
-               b=a.insert(i);
-           }
-           catch(Exception e){
-               out.println("error"+e);
-           }
-          
+            String mobile=request.getParameter("mobile");
+           String pass=request.getParameter("password");
+           String c1=null,c2=null,c3=null,name=null;
+           action a =new action();
+            String qry="select * from calm where mobile='"+mobile+"' and password='"+pass+"'";
+              ResultSet rs=null;
+              rs=a.act(qry);
+              while(rs.next()){
+    name=rs.getString("name");
+    c1=rs.getString("char1");
+    c2=rs.getString("char2");
+    c3=rs.getString("char3");
+}
+              rs.last();
+int row = rs.getRow();
+rs.beforeFirst();
+while(rs.next()){
+    name=rs.getString("name");
+    c1=rs.getString("char1");
+    c2=rs.getString("char2");
+    c3=rs.getString("char3");
+}
+              if(row==0){
+            
         %>
-         
-    <body>
-
+         <script>alert("Please Check the Login credentials !")</script>
+        <script>window.location.href = "login.html";</script>
+      
+        <%  }%>
+     <body>
 		
         <div class="top-content">
         	
@@ -89,9 +89,9 @@
                                                 case 2: common=c3; break;
                                                 default: common=c1;
                                             }
-                                            
-                                        String qry="select * from feed where search like '%"+common+"%' ";
-                                        ResultSet rt= a.act(qry);
+                                        
+                                        String qr="select * from feed where search like '%"+common+"%' ";
+                                        ResultSet rt= a.act(qr);
                                         rt.last();
                                         int rows = rt.getRow();
                                         rt.beforeFirst();
@@ -109,9 +109,9 @@
 		                        		</div>
 		                            </div>
 		                            <div class="form-bottom">
+                                                
                                                 <div class="form-group">
-                                                    <center><img src="assets/one.png" height="70%" width="70%"></center></div>			
-				                        <button type="button"  class="btn btn-next">Next</button>
+                                                    <center><img src="assets/one.png" height="70%" width="70%"></center></div>        <button type="button"  class="btn btn-next">Next</button>
 				                    </div>
                                             </fieldset>
                                     <% 
@@ -193,4 +193,3 @@
     </body>
 
 </html>
-

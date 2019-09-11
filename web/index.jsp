@@ -19,13 +19,6 @@
         <link rel="stylesheet" href="assets/css/style.css">
 
       
-<script>
-function mobile() {
-  var x = document.getElementById("mobile").value;
-  
-  document.getElementById("mob").innerHTML = x;
-}
-</script>
     </head>
 
     <body>
@@ -40,7 +33,7 @@ function mobile() {
                             <h1><strong>Ease</strong> Registration Form</h1>
                             <div class="description">
                             	<p>
-	                            	<strong>Authentication</strong></a></p>
+	                            	<strong>Welcome</strong></a></p>
                             </div>
                         </div>
                     </div>
